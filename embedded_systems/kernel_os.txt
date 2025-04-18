@@ -1,0 +1,110 @@
+- System bring-up:(Bootstrapping in Linux refers to the process of loading and initializing the operating system (OS) when a computer is powered on)
+	BIOS/UEFI(Unified Extensible Firmware Interface) initialization:
+		Power-on self-test (POST) is performed to check the basic functionality of hardware components (CPU, RAM, etc.).
+		BIOS/UEFI firmware initializes devices (keyboard, display, storage).
+		BIOS/UEFI searches for a bootable device based on its boot order configuration.
+		Once found, the first sector of the bootable device (Master Boot Record or GPT equivalent) is loaded into memory and executed.
+	Bootloader execution:
+		Bootloader is loaded into memory and executed.
+		It may present a menu allowing the user to select a kernel or operating system.
+		Configuration files (e.g., /boot/grub/grub.cfg for GRUB(Grand unified bootloader)) define boot options, kernel parameters, and initramfs location.
+		Bootloader loads the kernel image and initial RAM filesystem (initramfs) into memory.
+		Transfers control to the kernel by jumping to its entry point.
+	Kernel Initialization:
+		Kernel initializes essential hardware, including CPUs, memory, and device drivers.
+		Kernel mounts the initramfs as a temporary root filesystem to load drivers and modules needed for boot.
+		Kernel detects and initializes the actual root filesystem.
+		Switch the root filesystem from initramfs to the real root filesystem (pivot_root).
+		Executes the init process (PID 1), passing control to user-space.
+	Init system initialization: Initialize system services and user-space environment. Some of the types are SysVinit, Upstart, systemd.
+		init or equivalent (e.g., systemd) reads configuration files (/etc/inittab, /etc/systemd/) to determine system runlevel or target.
+		Initializes required services and daemons in the specified order.
+		Mounts additional filesystems (e.g., /proc, /sys, /dev).
+		Configures networking and other system settings.
+		Run level or Target Initialization: Configure the system for its intended use (multi-user mode, graphical mode, etc.).
+	In SysVinit: Executes scripts in /etc/rc.d/rcX.d/ where X corresponds to the runlevel.
+	In systemd: Activates the target specified in /etc/systemd/system/default.target (e.g., multi-user.target, graphical.target).
+		Services like SSH, display managers, and database servers are started.
+	User login:
+
+- What are the background services kernel starts while booting?
+	systemd based services:
+		systemd-journald.service 	Manages logs and kernel messages.
+		systemd-udevd.service 		Handles device detection and management.
+		systemd-logind.service 		Manages user sessions and power states.
+		dbus.service				IPC (Inter-Process Communication) system for apps.
+		networkd.service			Manages networking services.
+		sshd.service				Enables Secure Shell (SSH) access.
+		cron.service				Manages scheduled jobs (cron jobs).
+		cups.service				Handles printing services.
+		rsyslog.service 			System log management.
+	Kernel Space Daemons:
+		kthreadd					Kernel thread manager.
+		ksoftirqd					Handles software interrupts.
+		kworker						Manages background kernel tasks.
+		kblockd						Handles block device requests.
+		kswapd						Manages memory swapping.
+		jbd2						Manages journaling for ext4 filesystem.
+		flush-*						Writes dirty pages to disk.
+	User-Level Daemons:
+		cron 						Scheduled tasks.
+		dbus 						Message bus for system communication.
+		udevd 						Manages device nodes in /dev/.
+		NetworkManager 				Handles network connections.
+		rsyslogd 					Logs system messages.
+		sshd 						Secure remote access via SSH.
+
+- Explain the background things(OS level things) that happen when a process is started in linux:
+	When a process is started in Linux, several OS-level operations occur to prepare and manage the process's execution. The procedure follows:
+	Command parsing,
+	forking a new process,
+	loading the executable,
+	assigning the PID,
+	setting up memory space,
+	loading dynamic libraries,
+	scheduling and execution,
+	signal set-up,
+	environment initialization,
+	control transfer to user space(main function).
+
+- Process & Threads:
+	Threads share the heap, global variables but will have separate stack memory.
+	A "process" is a self-contained program running on a computer, with its own memory space, while a "thread" is a smaller unit of execution within a process, meaning multiple threads can exist within a single process and share the same memory space, making it faster to switch between them compared to switching between separate processes; essentially, a process is a heavier unit, while a thread is a lighter, more efficient unit within that process.
+
+- How is memory handled in a multi-core system?
+	Architectures used: Shared memory model, distributed memory model, Hybrid model.
+	Memory management techniques in multi-core system: Cache memory & cache coherency, Memory synchronization, Memory partitioning, Virtual memory & paging, Memory  bandwidth & latency optimization.
+	OS kernel manages process and thread memory allocation.
+
+- How the Kernel Prevents User Space from Directly Accessing System Resources?
+	Memory protection,
+	System calls as the only entry point,
+	hardware access control,
+	process isolation & privileges,
+	File system permissions & secure access.
+
+What is device tree?
+The Device Tree is structured as a hierarchical representation of hardware components, written in a Device Tree Source (DTS) file, which is compiled into a Device Tree Blob (DTB).
+
+Explain the background steps when the user app calls kernel APIs/system calls:
+	A system call is typically invoked using standard C library (glibc) functions like open(). The function open() is not a direct system call but a wrapper in the C standard library that eventually invokes the actual system call (e.g., sys_open in Linux).
+	Since user applications run in user mode (Ring 3 in x86 architecture) and cannot directly access kernel resources, they must use a trap instruction (software interrupt or fast syscall instruction) to switch to kernel mode (Ring 0).
+	The CPU jumps to a predefined Interrupt Descriptor Table (IDT) entry or System Call Table. The system call number(passed in a register like rax in x86-64) determines which kernel function to execute. The kernel verifies arguments passed from user space (to prevent security risks like buffer overflows)
+	The kernel runs the corresponding system function(sys_open() for file opening).
+	Once the system call completes, the kernel prepares the return values(success/error codes). It restores user-space registers and stack, it executes a special return instruction(sysret on x86-64) to switch back to user mode.
+	The return value from the system call is passed back to the user application.
+
+What is MMIO?
+	Memory-mapped I/O is a technique uses the same address space to address both main memory and I/O devices. The memory and registers of the I/O devices are mapped to address values, so a memory address may refer to either a portion of physical RAM or to memory and registers of the I/O device. Thus, the CPU instructions used to access the memory (e.g. MOV ...) can also be used for accessing devices. Each I/O device either monitors the CPU's address bus and responds to any CPU access of an address assigned to that device, connecting the system bus to the desired device's hardware register, or uses a dedicated bus. The operating system kernel is responsible for mapping and managing MMIO regions.
+
+What is PMIO?
+	Port-Mapped I/O is an I/O access method used by CPUs to communicate with peripheral devices through a separate I/O address space, rather than the main memory address space(like in MMIO). It is commonly used in x86 architectures. In PMIO, devices are assigned I/O ports, which are special addresses separate from regular memory. The CPU interacts with these ports using dedicated I/O instructions such as IN(read from an I/O port), OUT (write to an I/O port). The I/O address space is typically much smaller than memory (e.g., x86 traditionally has 64K I/O ports). PMIO is used for simpler, low-speed devices like keyboards, serial ports, and some legacy hardware.
+
+
+Explain the steps that happen in the background when a context switch happens.
+	Context switch happens during multi-tasking between processes or threads, interrupt handling and system calls. Context switch will be triggered by timer interrupt(OS scheduler), system call(ex: sleep(), wait()), hardware interrupt.
+	The OS kernel pauses the running process and saves its state(context) in its Process Control Block(PCB). It saves CPU registers (general-purpose, stack pointer, program counter), Process execution state (running, ready, blocked), Virtual memory mapping, Open file descriptors and other metadata.
+	The OS scheduler selects the next process or thread to run based on scheduling algorithms.
+	It loads the saved context of the selected process, restore CPU registers, program counter, and stack pointer from the PCB, updates the Memory Management Unit(MMU) if the new process has a different memory space.
+	The CPU jumps to the new process’s program counter.
+

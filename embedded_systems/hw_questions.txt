@@ -1,0 +1,29 @@
+What is GPIO? 
+	GPIO pin is a versatile pin on an IC that can be configured by software to act as either an input or an output, allowing interaction with external
+	devices and circuits. If configured as input, GPIO pin can read the state of a connected switch or sensor. When configured as an output, a GPIO pin can send a signal to control a connected device.
+
+What is GPIO expander?
+	GPIO expanders essentially act as a bridge, allowing a microcontroller to control or read signals from a larger number of external devices than its native GPIO pins allow. They typically communicate with the microcontroller via a serial interface like I2C or SPI, using a few pins to control a larger number of GPIOs on the expander chip.
+
+Pull-up resistor:
+	A "pull-up resistor" is a resistor used in electronic circuits to ensure a specific voltage level (typically a high logic state) on a pin or wire when no other active signal is present, usually by connecting it to the positive power supply, effectively "pulling" the voltage up to a known value; commonly used with switches and buttons to define a clear input state when the switch is open
+
+pull-down resistor:
+	A "pull-down resistor" is a resistor in an electronic circuit that is connected between a circuit pin and ground, which actively pulls the voltage on that pin to a low logic level (close to 0 volts) when no other active component is connected to it, essentially ensuring a defined state for the signal even when a switch is open.
+
+APIC(Application peripheral interrupt controller): 
+	An application peripheral interrupt controller (APIC) is a dedicated hardware component within a system that manages interrupt requests from various peripheral devices, allowing the central processing unit (CPU) to be notified efficiently when a peripheral needs attention, thus enabling timely response to events like data ready, errors, or device status changes, all while prioritizing interrupts based on their importance and configuration settings; essentially acting as a mediator between peripherals and the CPU to handle interrupt requests in an organized manner.
+
+- MMU:
+	It's a hardware component(The MMU is usually integrated into the processor, but in some systems it's a separate integrated circuit ) that manages a computer's memory resources. It handles memory allocation to processes, protects memory from corruption, translates virtual addresses, and tracks memory usage.
+	It examines all memory references on the memory bus, translating these requests, known as virtual memory addresses, into physical addresses in main memory.
+	https://medium.com/@karthix25/5-the-art-of-translation-how-virtual-addresses-become-physical-c935ed3069e4
+
+- What is IOMMU
+	IOMMU, or Input-Output Memory Management Unit, is a hardware component that connects a bus to system memory. It's used to map virtual addresses to physical addresses, which is useful for virtualization. 
+	How does IOMMU work?
+		Prevents I/O devices from accessing memory outside of the OS's boundaries, allows devices to be assigned directly to a virtual machine.
+		Translates device virtual addresses to physical addresses, handles interrupts remapping.
+
+- What is MSI-X
+	Message Signaled Interrupts (MSI) are a method of signaling interrupts, using special in-band messages to replace traditional out-of-band signals on dedicated interrupt lines. While message signaled interrupts are more complex to implement in a device, they have some significant advantages over pin-based out-of-band interrupt signalling, such as improved interrupt handling performance. This is in contrast to traditional interrupt mechanisms, such as the legacy interrupt request (IRQ) system.

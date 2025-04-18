@@ -1,0 +1,44 @@
+- Virtualization: Creates simulated versions of physical hardware, networks, and more. This allows for multiple virtual machines to run on a single physical machine. KVM and QEMU are both virtualization technologies used to create and manage virtual machines (VMs). KVM is a type-1 hypervisor that interacts directly with the computer's hardware, while QEMU is a type-2 hypervisor that runs within the host operating system
+
+- How memory is accessed in VM: 
+
+- How virtual machine access hardware resources in Linux?
+	Virtualization allows virtual machines to use the host's physical hardware as three distinct types of devices:
+		* Virtualized and emulated devices:
+			- KVM implements many core devices for virtual machines as software. These emulated hardware devices are crucial for virtualizing operating systems. Emulated devices are virtual devices which exist entirely in software.
+			- In addition, KVM provides emulated drivers. These form a translation layer between the virtual machine and the Linux kernel (which manages the source device). The device level instructions are completely translated by the KVM hypervisor. Any device of the same type (storage, network, keyboard, or mouse) that is recognized by the Linux kernel can be used as the backing source device for the emulated drivers.
+			- Some of the KVM emulated devices
+				- Virtual CPUs
+				- Emulated system components
+				- Emulated storage drivers
+				- Emulated sound devices
+				- Emulated graphics cards
+				- Emulated network devices
+				- Emulated watchdog devices
+		* Paravirtualized devices:
+			- Paravirtualization provides a fast and efficient means of communication for guests to use devices on the host machine. KVM provides paravirtualized devices to virtual machines using the virtio API as a layer between the hypervisor and guest.
+			- All virtio devices have two parts: the host device and the guest driver. virtio drivers allow the guest operating system access to physical devices on the host system.
+		* Physically shared devices: 
+			- Certain hardware platforms enable virtual machines to directly access various hardware devices and components. This process in virtualization is known as device assignment, or also as passthrough.
+			- VFIO device assignment: Virtual Function I/O (VFIO) provides virtual machines with high performance access to physical hardware. VFIO attaches PCI devices on the host system directly to virtual machines, providing guests with exclusive access to PCI devices for a range of tasks. This enables PCI devices to appear and behave as if they were physically attached to the guest virtual machine.
+			- USB, PCI, and SCSI passthrough: The KVM hypervisor supports attaching USB, PCI, and SCSI devices on the host system to virtual machines. USB, PCI, and SCSI device assignment makes it possible for the devices to appear and behave as if they were physically attached to the virtual machine. Thus, it provides guests with exclusive access to these devices for a variety of tasks.
+			- SR-IOV: SR-IOV (Single Root I/O Virtualization) is a PCI Express (PCI-e) standard that extends a single physical PCI function to share its PCI resources as separate virtual functions (VFs). Each function can be used by a different virtual machine via PCI device assignment.
+
+- How hardware interrupts are passed to VM in linux
+	The handling of hardware interrupts in a VM depends on the virtualization technology used:
+		* Interrupt Virtualization with Emulation:
+			The hypervisor traps hardware interrupts and emulates them for the guest OS. Emulation is slower because every hardware interrupt requires intervention by the hypervisor and VM exit.
+		* Para-Virtualized Interrupts:
+			The guest OS is aware that it is running in a virtualized environment. Uses shared memory (ring buffers) and hypercalls to efficiently pass interrupts between the hypervisor and VM. Interrupts are batched or coalesced to reduce context switching overhead. Much faster than emulation, reduces the number of VM exits.
+		* Hardware-Assisted Interrupt Remapping (PCI Passthrough, VFIO, SR-IOV):
+			Direct hardware access via IOMMU (VT-d / AMD-Vi). The physical device’s interrupts are remapped and assigned to the VM. The VM can handle the device as if it were directly attached.
+
+- What is SR-IOV
+	Single Root I/O Virtualization (SR-IOV) is a technology that lets a single physical device appear as multiple virtual devices. This allows multiple virtual machines (VMs) to share a single device, such as a network adapter. SR-IOV is an extension to the PCI Express (PCIe) specification. 
+
+- What are the possible performance issues while running in VM compared to running in host OS?
+
+VPIC: 
+A "virtual peripheral interrupt controller" (vPIC) refers to a software-based implementation of a traditional peripheral interrupt controller (PIC) within a virtual machine environment, allowing guest operating systems to manage interrupts from virtualized peripherals as if they were directly connected to physical hardware, essentially providing a layer of abstraction between the guest OS and the underlying physical hardware interrupts.
+
+- What is VT-D in BIOS settings?

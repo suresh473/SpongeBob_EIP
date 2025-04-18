@@ -1,0 +1,83 @@
+Codecs & Streaming
+
+V4L2:
+Video for linux 2 is an API (Application Programming Interface) in the Linux kernel that provides support for video capture, output, and processing devices such as Webcams, TV tuners, Video capture cards, Frame grabbers, Embedded camera sensors.
+It is the successor to the older V4L (Video for Linux) API and is part of the Linux Media Subsystem.
+
+Streaming Basics:
+TCP: Transmission control protocol
+UDP: User datagram protocol
+RTP: Real-time transport protocol
+RTCP: RTP control protocol
+The Real-time Transport Protocol (RTP) is a network protocol for delivering audio and video over IP networks. RTP is used in communication and entertainment systems that involve streaming media, such as telephony, video teleconference applications including WebRTC, television services and web-based push-to-talk features.
+RTP typically runs over User Datagram Protocol (UDP). RTP is used in conjunction with the RTP Control Protocol (RTCP). While RTP carries the media streams (e.g., audio and video), RTCP is used to monitor transmission statistics and quality of service (QoS) and aids synchronization of multiple streams. RTP is one of the technical foundations of Voice over IP and in this context is often used in conjunction with a signaling protocol such as the Session Initiation Protocol (SIP) which establishes connections across the network.
+
+RTMP: Real-time messaging protocol
+Real-Time Messaging Protocol (RTMP) is a communication protocol for streaming audio, video, and data over the Internet. Originally developed as a proprietary protocol by Macromedia for streaming between Flash Player and the Flash Communication Server, Adobe (which acquired Macromedia) has released an incomplete version of the specification of the protocol for public use.
+RTMP proper, the "plain" protocol which works on top of Transmission Control Protocol (TCP) and uses port number 1935 by default.
+While the primary motivation for RTMP was to be a protocol for playing Flash video, it is also used in some other applications, such as the Adobe LiveCycle Data Services ES.
+
+RTSP: Real-time streaming protocol
+The Real-Time Streaming Protocol (RTSP) is an application-level network protocol designed for multiplexing and packetizing multimedia transport streams (such as interactive media, video and audio) over a suitable transport protocol. RTSP is used in entertainment and communications systems to control streaming media servers. The protocol is used for establishing and controlling media sessions between endpoints. Clients of media servers issue commands such as play, record and pause, to facilitate real-time control of the media streaming from the server to a client (video on demand) or from a client to the server (voice recording).
+SRT: Secure reliable transport
+SRT provides connection and control, reliable transmission similar to TCP; however, it does so at the application layer, using UDP protocol as an underlying transport layer. It supports packet recovery while maintaining low latency (default: 120 ms). SRT also supports encryption using AES.
+The protocol was derived from the UDT project,[2] which was designed for fast file transmission. It provided the reliability mechanism by utilizing similar methods for connection, sequence numbers, acknowledgements and re-transmission of lost packets. It utilizes selective and immediate (NAK-based) re-transmission.
+SRT added several features on top of that in order to support live streaming mode:
+Controlled latency, with source time transmission (timestamp-based packet delivery)
+Relaxed sender speed control
+Conditional "too late" packet dropping (prevents head-of-line blocking caused by a lost packet that wasn't recovered on time)
+Eager packet re-transmission (periodic NAK-report)
+
+HTTP: Hypertext transfer protocol
+DASH: Dynamic adaptive streaming over HTTP
+Dynamic Adaptive Streaming over HTTP (DASH), also known as MPEG-DASH, is an adaptive bitrate streaming technique that enables high quality streaming of media content over the Internet delivered from conventional HTTP web servers. Similar to Apple's HTTP Live Streaming (HLS) solution, MPEG-DASH works by breaking the content into a sequence of small segments, which are served over HTTP. An early HTTP web server based streaming system called SProxy was developed and deployed in the Hewlett Packard Laboratories in 2006.[2][3] It showed how to use HTTP range requests to break the content into small segments. SProxy shows the effectiveness of segment based streaming, gaining best Internet penetration due to the wide deployment of firewalls, and reducing the unnecessary traffic transmission if a user chooses to terminate the streaming session earlier before reaching the end. Each segment contains a short interval of playback time of content that is potentially many hours in duration, such as a movie or the live broadcast of a sport event. The content is made available at a variety of different bit rates, i.e., alternative segments encoded at different bit rates covering aligned short intervals of playback time. While the content is being played back by an MPEG-DASH client, the client uses a bit rate adaptation (ABR) algorithm[4] to automatically select the segment with the highest bit rate possible that can be downloaded in time for playback without causing stalls or re-buffering events in the playback.[5] The current MPEG-DASH reference client dash.js[6] offers both buffer-based (BOLA[7]) and hybrid (DYNAMIC[5]) bit rate adaptation algorithms. Thus, an MPEG-DASH client can seamlessly adapt to changing network conditions and provide high quality playback with few stalls or re-buffering events.
+
+
+HLS: HTTP live streaming
+HTTP Live Streaming (also known as HLS) is an HTTP-based adaptive bitrate streaming communications protocol developed by Apple Inc. and released in 2009. Support for the protocol is widespread in media players, web browsers, mobile devices, and streaming media servers. As of 2022, an annual video industry survey has consistently found it to be the most popular streaming format.[2]
+HLS resembles MPEG-DASH in that it works by breaking the overall stream into a sequence of small HTTP-based file downloads, each downloading one short chunk of an overall potentially unbounded transport stream. A list of available streams, encoded at different bit rates, is sent to the client using an extended M3U playlist.[3]
+Based on standard HTTP transactions, HTTP Live Streaming can traverse any firewall or proxy server that lets through standard HTTP traffic, unlike UDP-based protocols such as RTP. This also allows content to be offered from conventional HTTP servers and delivered over widely available HTTP-based content delivery networks.[4][5][6] The standard also includes a standard encryption mechanism[7] and secure-key distribution using HTTPS, which together provide a simple DRM system. Later versions of the protocol also provide for trick-mode fast-forward and rewind and for integration of subtitles.
+WebRTC:(Web real time communication)
+It is based on UDP and provides a real-time streaming experience for the users. UDP doesn’t wait for acknowledgement of the data packet so it’s faster than TCP.
+WebRTC is also a peer-to-peer protocol, which means you don’t need a server to intercept or transmit your data. Modern web browsers support WebRTC APIs hence you can do this inside a web browser as well!
+
+How Meta live streaming works: https://dennysam.medium.com/facebook-lives-infrastructure-6814c78d64b6
+
+RDP: Remote desktop protocol
+
+
+FFMpeg: https://img.ly/blog/ultimate-guide-to-ffmpeg/
+
+AMF:
+
+DirectX:
+
+Video Codecs:
+H.264: 
+Uses macroblocks 16x16, divided into sub MBs. I, P, B frames supported. ASO, FMO are supported.
+Divide the frame into multiple slices.
+Transform size 4x4 and 8x8.
+MV prediction upto ¼ pixel
+CABAC, CAVLC
+
+HEVC:
+Uses CTU(coding tree units) upto 64x64.
+Divide the frame into multiple tiles.
+Transform size 4x4, 8x8, 16x16, 32x32
+MV prediction upto ⅛ pixel.
+Improved CABAC.
+Wavefront parallel processing.
+
+VP9:
+Uses superblocks 64x64
+Flexible transform sizes upto 32x32
+Entropy range coding similar to CABAC.
+Tile-based parallel processing
+
+AV1:
+Superblocks upto 128x128, transform upto 64x64
+Tile based and frame level parallelism.
+
+Temporal & Spatial AQ:
+
+GDR(Gradual Decoder refresh):

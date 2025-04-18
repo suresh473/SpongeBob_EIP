@@ -1,0 +1,158 @@
+Object oriented Concepts:
+  Class: 
+    Classes are abstract definitions that represent the types of objects in a system, it’s like a blueprint for an object.
+
+  Access Specifiers:
+    Public: Members declared as public can be accessed from anywhere outside the class.
+    Private: Members declared as private can only be accessed by member functions and friends of the class.
+    Protected: Members declared as protected can be accessed by member functions and friends of the class, as well as by member functions and friends of derived classes (subclasses).
+
+  Abstract Class:
+    A class meant to be used as a base class. Which must at least have one pure virtual function ( = 0) declared.
+    In C++, an abstract base class (ABC) is a class that cannot be instantiated on its own and serves as a blueprint for derived classes. It is designed to be inherited from, and its derived classes must implement the pure virtual functions declared in the ABC.
+
+  Object:
+    It’s an instance of class.
+
+  Abstraction:
+    Abstraction is a design pattern in which data is visible only to semantically related functions, to prevent misuse. The success of data abstraction leads to frequent incorporation of data hiding as a design principle in object-oriented and pure functional programming.
+
+  Encapsulation:
+    Encapsulation prevents external code from being concerned with the internal workings of an object. This facilitates code refactoring, for example allowing the author of the class to change how objects of that class represent their data internally without changing any external code (as long as "public" method calls work the same way). 
+
+  Polymorphism:
+    Compile Time:
+      Function overloading:
+        When there are multiple functions with the same name but different parameters, then the functions are said to be overloaded, hence this is known as Function Overloading.
+      Operator overloading:
+        C++ has the ability to provide the operators with a special meaning for a data type, this ability is known as operator overloading. For example, we can make use of the addition operator (+) for string class to concatenate two strings.
+
+    Run Time:
+      Virtual functions:
+        This type of polymorphism is achieved by Function Overriding. Late binding and dynamic polymorphism are other names for runtime polymorphism. The function call is resolved at runtime in runtime polymorphism. In contrast, with compile time polymorphism, the compiler determines which function calls to bind to the object after deducing it at runtime.
+      Why constructors cannot be virtual:
+        At the time a constructor is invoked, the virtual table, which is essential for dynamic dispatch in virtual functions, has not yet been established. The virtual table is typically set up during the constructor execution. If the constructor itself were virtual, the program would face a paradox: it would need the virtual table to call the correct constructor, but the virtual table does not exist until after a constructor has been executed. This creates a circular dependency, preventing the correct construction of the object.
+      What's the purpose of virtual desctructors:
+        In C++, a virtual destructor ensures that when an object of a derived class is deleted through a pointer to its base class, the correct destructor is called, preventing memory leaks and ensuring proper cleanup. If the destructor in the base class is not virtual, only the base class destructor will be called, potentially leaving resources allocated by the derived class unreleased. 
+
+    Dynamic binding:
+      In dynamic binding, the code to be executed in response to the function call is decided at runtime. Dynamic binding means that the code associated with a given procedure call is not known until the time of the call at run time. 
+
+
+  Inheritance:
+    The capability of a class to derive properties and characteristics from another class is called Inheritance.
+    public Inheritance: When a class inherits another class as public, the public members of the base class become public members of the derived class.
+    protected Inheritance: When a class inherits another class as protected, the public and protected members of the base class become protected members of the
+                           derived class.
+    private Inheritance: When a class inherits another class as private, the public and protected members of the base class become private members of
+                         the derived class.
+
+Const keyword in methods:
+  The const keyword in C++ methods specifies that the method will not modify the object's state. 
+  It's appended to the function signature, after the parameter list.
+
+Pointers:
+  Smart Pointers:
+    Shared pointer: Reference count increases on passage/copy. Whenever reference count reaches to 0, deallcoation will happen
+    Unique pointer: Ensures memory allocation that occurs is also deallocated when the pointer goes out of scope. It maintains sense of ownership and prevent copy. Reference count will always be 1
+    Weak pointer: Special case of shared_pointer. Lock on the pointer returns a shared_pointer if ptr is still valid.
+
+RAII(Resource Acquisition Is Initialization):
+  RAII (Resource Acquisition Is Initialization) is a C++ programming technique that binds the lifecycle of resources (memory, file handles, sockets, etc.) to the lifetime of objects. This ensures automatic cleanup of resources when an object goes out of scope. Smart_pointer are one example, lock_guards is another etc.
+
+Emplace:
+  The emplace family of functions in C++ (emplace_back, emplace_front, emplace) is used in STL containers (like vector, map, set, queue, etc.) to construct objects in-place inside the container, avoiding unnecessary copies or moves.
+
+Lambda functions:
+  In C++, lambda functions (introduced in C++11) are a way to define anonymous function objects, also known as functors. They are essentially inline functions that you can create and use directly within your code.
+
+Templates:
+  In C++, templates are a powerful feature that enable generic programming. They allow you to write code that can work with different data types without having to write separate code for each type. Template generates huge code size, it generates the functions for all the data types that are used in the program.
+
+Diamond problem:
+  The diamond problem occurs when a class inherits multiple copies of a base class through multiple inheritance. It causes ambiguity and redundant copies of the base class.
+  Solution: Use virtual inheritance to ensure only one instance of the base class exists.
+
+
+Std::move: 
+
+private constructor:
+  A private constructor in C++ is a constructor that is declared with the private access specifier. This means that objects of the class cannot be instantiated directly from outside the class. Purpose of private constructor is singleton design pattern(only one instance is created), factory method pattern(Prevents direct instantiation while allowing controlled object creation through a static method).
+
+
+Singleton Design Pattern:
+  The Singleton pattern is a creational design pattern that ensures a class has only one instance and provides a global access point to that instance.
+  In multi-threaded environments, we must ensure that only one instance is created. The best way in C++11 and later is to use static local variables (which are initialized only once).
+
+Factory Method Pattern:
+  The Factory Method Pattern is a creational design pattern that provides an interface for creating objects without specifying their exact class. Instead of instantiating objects directly using new, we use a factory method that returns objects of a common base type.
+
+Static method:
+  A static method in C++ is a member function that belongs to the class itself rather than any specific object of the class. It is declared using the static keyword and can be called without creating an object of the class
+
+References in C++
+  When a variable is declared as a reference, it becomes an alternative name for an existing variable. A variable can be declared as a reference by putting ‘&’ in the declaration. 
+
+Copy constructor:
+  A copy constructor is a special constructor in C++ used to create a new object as a copy of an existing object. Takes a reference (const ClassName&) to another object of the same class. Performs a deep copy(user defined) or shallow copy(default) based on the implementation.
+  Ex:
+      IntArray(const IntArray& other) {
+        data = new int[other.size];
+        size = other.size;
+        for(int i = 0; i < size; ++i) {
+          data[i] = other.data[i];
+        }
+      }
+
+Copy assignment operator:
+  The copy assignment operator(operator=) in C++ is used to assign one existing object to another, performing a deep or shallow copy based on the class definition. If not defined, C++ provides a default one, which performs a shallow copy (copies each member directly).
+  Ex:
+      IntArray& operator=(const IntArray& other) {
+        if(this == &other) {
+          return *this;
+        }
+        delete[] data;
+        size = other.size;
+        data = new int[size];
+        for(int i = 0; i < size; ++i) {
+          data[i] = other.data[i];
+        }
+        return *this;
+      }
+
+Move constructor:
+  A move constructor is a special constructor in C++ that moves an object's resources instead of copying them, improving performance for temporary (rvalue) objects.
+  Ex:
+      IntArray(IntArray&& other) noexcept {
+        data = other.data;
+        size = other.size;
+
+        other.data = nullptr;
+        other.size = 0;
+      }
+
+Move assignment operator:
+  The move assignment operator (operator=) transfers ownership of resources from one object to another without deep copying, improving performance.
+  Ex:
+      IntArray& operator=(IntArray&& other) noexcept {
+        if(this == &other) {
+          return *this;
+        }
+        delete[] data;
+        data = other.data;
+        size = other.size;
+        other.data = nullptr;
+        other.size = 0;
+        return *this;
+      }
+
+Linked Lists:
+
+Sentinel nodes:
+
+
+constexpr:
+
+atomics:
+
+

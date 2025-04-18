@@ -1,0 +1,22 @@
+HW Interfaces:
+	Serial Interface: Serial interface will communicate data one bit at a time(half-duplex or full duplex), utilizing less wires.
+		Asynchronous serial interfaces(No clock signal):
+			UART(universal asynchronous receiver-transmitter): UART is mostly used as a form of device-to-device hardware communication protocol. UART uses only 	two wires for its transmitting and receiving ends. The buadrate needs to be same on both ends.
+			RS-232: 
+			RS-485: 
+
+		Synchronous serial interfaces(Clock signal)
+			I2C: The I2C(Inter integrated circuit) bus is a two wire serial interface originally developed by the Phillips. The I2C bus uses only two
+				bidirectional lines, Serial Data Line (SDA) and a Serial Clock Line (SCL). It follows a master/slave hierarchy, wherein the master is defined as
+				the device that clocks the bus, addresses slaves and writes or reads data to and from registers in the slaves. 
+			SMBUS: The SMBUS(system management bus) is a subset of I2C developed by Intel. It is a two wire interface used for low speed system management
+				communication between devices on a motherboard. The SMBDAT wire transfers serial data, and the SMBCLK wire acts as the serial clock. The master
+				drives the SMBCLK, which can range from 10 kHz to 100 kHz, but either line can drive the SMBDAT. Both of these lines are bidirectional.
+			SPI: 
+			USB: 
+			CAN: 
+
+	Parallel Interfaces:
+		PCIe: 
+		Memory bus: 
+

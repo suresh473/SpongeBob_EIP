@@ -1,0 +1,11 @@
+What is device driver: Interface to communicate with hardware components.
+Types:
+	Char driver: Used for devices that transfer data character by character. Serial interface, keyboard, mouse.
+	Block driver: Used for devices that transfer data in fixed-size blocks. hard drive, USB
+	Network driver: Handle network interfaces. Ethernet card, Wi-Fi adapters.
+	Virtual driver: Provide functionality without interacting with actual hardware.
+
+How user space talks to kernel drivers:
+	Through system calls open(), read(), write(), ioctl().
+	Procfs & Sysfs (Virtual Filesystems)
+	Memory mapping

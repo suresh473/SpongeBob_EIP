@@ -1,0 +1,82 @@
+This file contains some of the common embedded/system topics that were asked during interviews:
+
+ - What is 2’s complement and why 2's compliment?
+	2's complement is a method used in computing to represent negative integers in binary.
+	Why the processor needs to use 2’s complement. Why can’t it simply use the last bit(31st bit incase of an integer) as a sign bit?
+		- It simplifies arithmetic operations, A - B can be done as A + (2’s complement of B).
+		- Single representation for 0.
+		- One additional number can be stored against the sign bit mechanism. (-128 to 127 for 8-bit integers).
+		- Hardware simplicity, better overflow and underflow detection.
+		- Bitwise operations like shifts work seamlessly.
+
+- What is padding & why?
+	Byte padding is the process of adding extra bytes to a data structure or memory layout to align it according to system requirements. It ensures that data is stored efficiently in memory, avoiding misalignment penalties in CPU processing.
+	Why do we need byte padding?
+		- Memory Alignment: Most modern CPUs fetch data in chunks (e.g., 4, 8, or 16 bytes) from memory. If data is misaligned, extra cycles are needed to read/write it. Padding aligns data structures so that they fit into memory blocks efficiently.
+		- Avoiding Unaligned Access: Some CPUs (like ARM and older architectures) cannot access misaligned memory directly, causing exceptions or crashes. Byte padding ensures that data fields start at correct memory boundaries.
+		- Standardized Data Structure Layout: Padding ensures that a struct or data layout remains the same across different compilers and platforms. This is crucial for binary file formats, network protocols, and shared memory regions.
+	Padding can be avoided using #pragma pack(), __attribute__((packed))
+
+- What is endianess, how to detect it:
+	Endianness refers to how bytes are ordered in memory when storing multi-byte data types (e.g., integers, floating-point numbers).
+	- Little Endian: LSB is stored at lowest memory address. Most of the processors are little endian.
+	- Big Endian: MSB is stored at lowest memory address. Most of the network protocols communicate in big endian i.e., sends MSB first in network.
+	- How to detect it: int a = 1; char *c = (char *)&a; c[0] == 01 ? LE : BE;
+	- Convert LE <-> BE: htonl(), ntohl(). host to network long(htonl) converts from LE to BE and ntohl does the opposite.
+
+- Pointers: Pointer is a variable that stores memory location of a value rather than storing value directly.
+	- Why pointers: Dynamic Memory Allocation, Efficient Array Access, Function Pointers, Pointers to Structures, Linked Lists & Trees, Hardware Register/Memory Access, String Manipulation, Avoid Copying Large Data while passing array as a pointer to a function.
+	- NULL Pointer: A NULL pointer is a pointer that does not point to any valid memory, helps avoid accessing invalid memory locations or dangling pointers.
+	- Void pointer: A void pointer is a special type of pointer in C and C++ that can hold the address of any data type. It is a generic pointer, meaning it does not have an associated data type, and it must be explicitly cast to another pointer type before dereferencing.
+		A void pointer is useful in scenarios where a function or data structure needs to handle different data types in a generic way. Here are its key uses:
+		Generic Pointers (Type Flexibility)
+		Dynamic Memory Allocation
+		Data Structures (e.g., Linked Lists)
+		Function Pointers and Callbacks
+
+	int* p; // Pointer to an integer.
+	int const* p; // is pointer to const int
+	int *const p; // is const pointer to int
+	int const* const p; // is const pointer to const int
+	int ** const p; // is a const pointer to pointer to an int, Can’t change double pointer
+	int * const* p; // is a pointer to const pointer to an int, Can’t change the single pointer
+	int const ** p; // is a pointer to a pointer to a const int, Can’t change the value
+	int * const * const p; // is a const pointer to a const pointer to an int, Can’t change single pointer and double pointer.
+
+
+- Floating point representation:
+	- Refer https://www.geeksforgeeks.org/floating-point-representation-basics/
+
+- Difference between pre & post increment:
+	In disassembly code, pre-increment doesn’t create a temporary variable while post increment uses a temp variable for incrementing.
+	Who cares: Interviewers who know the difference. Use pre-increment in loops and wherever possible, this gives positive impression.
+
+- Atomic operations:
+	Modern CPUs provide atomic instructions to guarantee that an operation happens as a single, uninterrupted unit.
+	Atomic Load						atomic_load(&var);
+	Atomic Store					atomic_store(&var, 10);
+	Atomic Increment				atomic_fetch_add(&var, 1);
+	Atomic Decrement				atomic_fetch_sub(&var, 1);
+	Atomic Compare and Swap (CAS)	atomic_compare_exchange_strong(&var, &expected, new_val);
+
+- Ways to measure system or process performance:
+	TOP:
+	HTOP:
+	Perf tool:
+
+- What are the possible performance issues running huge number of processes
+
+
+What are soft and hard breakpoints?
+	A soft breakpoint is a software-implemented breakpoint where the debugger modifies the code at runtime by replacing an instruction with a special trap instruction (e.g., INT 3 in x86).
+	A hard breakpoint is a hardware-implemented breakpoint that uses the CPU's debug registers to pause execution when a specific instruction or memory access occurs. 
+
+Memory layout of a program:
+	Stack
+	..
+	..
+	..
+	Heap
+	BSS(uninitialized data)
+	Data(initialized data)
+	Text

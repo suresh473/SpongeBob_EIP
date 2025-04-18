@@ -1,0 +1,205 @@
+Vectors:
+  Accessing Elements:
+    operator[]: Accesses an element at a given index. No bounds checking is performed, so use with caution.
+    at(): Accesses an element at a given index with bounds checking. Throws an exception if the index is out of range.
+    front(): Accesses the first element of the vector.
+    back(): Accesses the last element of the vector.
+    data(): Returns a pointer to the underlying array of the vector. Useful for interfacing with C-style APIs.
+  Iterators:
+    begin(): Returns an iterator pointing to the first element.
+    end(): Returns an iterator pointing past the last element.
+    rbegin(): Returns a reverse iterator pointing to the last element.
+    rend(): Returns a reverse iterator pointing before the first element.
+  Modifying Elements:
+    push_back(): Adds an element to the end of the vector.
+    pop_back(): Removes the last element from the vector.
+    insert(): Inserts an element at a specified position.
+    erase(): Removes an element or a range of elements.
+    clear(): Removes all elements from the vector.
+  Capacity Management:
+    size(): Returns the number of elements in the vector.
+    capacity(): Returns the maximum number of elements that the vector can hold without reallocating.
+    reserve(): Reserves space for a specified number of elements.
+    shrink_to_fit(): Reduces the capacity of the vector to match its size.
+
+Hash map: unordered_map
+  Unoredered_map interfaces are end, find, insert, size, erase. Variables .first and .second
+  Sample usage:
+    unordered_map < int, string > hashmap;
+    hashmap.insert({ 1, "Value 1"});
+    if (hashmap.find(4) != hashmap.end())
+    hashmap.erase(2);
+    for (const auto & pair: hashmap) {
+      cout << "Key: " << pair.first << ", Value: " << pair.second << endl;
+    }
+    std::map<std::string, int> OrderedMap;
+  Accessing Elements:
+    operator[]: Access or insert an element with the specified key.
+    at(): Access an element with the specified key, throwing an exception if the key is not found.
+    find(): Find an element with the specified key. Returns an iterator to the element if found, or end() if not found.
+    count(): Count the number of elements with the specified key.
+  Iterating Over Elements:
+    begin(): Returns an iterator to the beginning of the map.
+    end(): Returns an iterator to the end of the map.
+    cbegin(): Returns a constant iterator to the beginning of the map.
+    cend(): Returns a constant iterator to the end of the map.
+  Inserting Elements:
+    insert(): Insert a key-value pair.
+    emplace(): Construct and insert a key-value pair in place.
+    emplace_hint(): Construct and insert a key-value pair in place, with a hint for where to insert.
+  Removing Elements:
+    erase(): Remove a specific element.
+    clear(): Remove all elements.
+  Other Operations:
+    size(): Get the number of elements in the map.
+    empty(): Check if the map is empty.
+    bucket_count(): Get the number of buckets in the map.
+    bucket_size(): Get the number of elements in a specific bucket.
+    load_factor(): Get the current load factor of the map.
+    max_load_factor(): Get or set the maximum load factor of the map.
+    rehash(): Rehash the map, potentially changing the number of buckets.
+    swap(): Swap the contents of two unordered_maps.
+
+Unordered_set:
+  Basic Operations:
+    insert(value): Inserts a new element into the set.
+    erase(value): Removes the specified element from the set.
+    find(value): Searches for the specified element and returns an iterator to it if found, otherwise returns end().
+    count(value): Returns 1 if the element is present, 0 otherwise.
+    clear(): Removes all elements from the set.
+    size(): Returns the number of elements in the set.
+    empty(): Checks if the set is empty.
+  Iterators:
+    begin(): Returns an iterator to the first element in the set.
+    end(): Returns an iterator to the element past the last element in the set.
+    cbegin(): Returns a constant iterator to the first element.
+    cend(): Returns a constant iterator to the element past the last element. 
+  Bucket Interface:
+    bucket_count(): Returns the number of buckets in the hash table.
+    bucket_size(n): Returns the number of elements in the specified bucket n.
+    bucket(key): Returns the bucket number that the specified key would be placed in.
+  Load Factor and Rehashing:
+    load_factor(): Returns the current load factor (average number of elements per bucket).
+    max_load_factor(): Returns the maximum load factor.
+    rehash(n): Rehashes the container to use at least n buckets. 
+  Other Operations:
+    swap(other_set): Swaps the contents of the set with another unordered_set.
+    operator== and operator!=: Compares two sets for equality.
+
+std::Pair
+
+Strings:
+  empty(), back(), pop_back(), push_back()
+  Construction and Assignment:
+    std::string(): Creates an empty string.
+    std::string(const char* s): Creates a string from a C-style string.
+    std::string(const std::string& other): Creates a string as a copy of another string.
+    operator=(const std::string& other): Assigns a string to another string.
+    operator=(const char* s): Assigns a C-style string to a string.
+  Accessing and Modifying:
+    size(): Returns the length of the string.
+    length(): Alias for size().
+    empty(): Checks if the string is empty.
+    operator[] (size_t pos): Accesses the character at a specific position.
+    at(size_t pos): Accesses the character at a specific position with bounds checking.
+    begin(): Returns an iterator to the beginning of the string.
+    end(): Returns an iterator to the end of the string.
+    c_str(): Returns a C-style string representation of the string.
+    append(const std::string& str): Appends a string to the end of the current string.
+    insert(size_t pos, const std::string& str): Inserts a string at a specific position.
+    erase(size_t pos, size_t count): Erases characters from the string.
+    replace(size_t pos, size_t count, const std::string& str): Replaces characters in the string.
+    substr(size_t pos, size_t count): Returns a substring of the string.
+  Comparison:
+    operator==, !=, <, <=, >, >=: Compares strings lexicographically.
+  Searching:
+    find(const std::string& str, size_t pos = 0): Finds the first occurrence of a substring.
+    rfind(const std::string& str, size_t pos = npos): Finds the last occurrence of a substring.
+  I/O Operations:
+    operator<<: Outputs the string to an output stream.
+    operator>>: Reads a string from an input stream.
+
+Stack:
+  stack<int> stack;
+  stack.push(3);
+  // Note, unlike other languages, popping here does not return the popped value
+  stack.pop();
+  // Check if empty
+  stack.empty(); // True/false
+  // Check element at top
+  stack.top();
+  // Get size
+  stack.size();
+
+Queue
+  queue<int> queue;
+  // Enqueueing/adding elements:
+  queue.push(1);
+  // Dequeing/removing elements:
+  queue.pop();
+  // Check if empty
+  queue.empty(); // true/false
+  // Check element at front of queue (next element to be removed)
+  queue.front();
+  queue.back();
+  // Get size
+  queue.size();
+  swap(queue& other): Swaps the contents of the queue with other.
+
+
+Deque
+  deque<int> queue;
+  queue.empty();
+  queue.back();
+  queue.pop_back();
+  queue.push_back(i);
+  queue.pop_front();
+  queue.front();
+
+Priority_queue:
+  priority_queue<int> heap;
+  // Add to heap
+  heap.push(1);
+  heap.push(2);
+  heap.push(3);
+  // Check maximum element
+  heap.top(); // 3
+  // Pop maximum element
+  heap.pop();
+  // Get size
+  heap.size(); // 2
+  // Convert a vector into a heap in linear time
+  priority_queue<int> heap(nums.begin(), nums.end());
+  // Min queue
+  priority_queue<int, vector<int>, greater<int>> heap(sticks.begin(), sticks.end());
+
+Element Access:
+  front(): Returns a reference to the first element.
+  back(): Returns a reference to the last element.
+  operator[]: Accesses the element at a given index.
+  at(): Accesses the element at a given index with bounds checking.
+Modifiers:
+  push_front(): Inserts an element at the front.
+  push_back(): Inserts an element at the back.
+  pop_front(): Removes the first element.
+  pop_back(): Removes the last element.
+  insert(): Inserts an element at a specified position.
+  erase(): Erases one or more elements at a specified position.
+  clear(): Removes all elements.
+  resize(): Resizes the deque.
+Capacity:
+  size(): Returns the number of elements in the deque.
+  empty(): Checks if the deque is empty.
+  max_size(): Returns the maximum possible number of elements the deque can hold.
+Iterators:
+  begin(): Returns an iterator pointing to the first element.
+  end(): Returns an iterator pointing to the past-the-end element.
+  rbegin(): Returns a reverse iterator pointing to the last element.
+  rend(): Returns a reverse iterator pointing to the before-the-beginning element.
+
+In C++, std::iota() is a library function that is used to fill a range of elements with increasing values starting from the given initial value.
+reverse() reverses the order of the elements in the range [first, last) of any container. 
+std::find() is a C++ algorithm that searches for a specific element within a range.
+std::find(first, last, value);
+std::accumulate()
+std::min_element()
